@@ -1,0 +1,26 @@
+.output {
+  background-color: #ffffff; /* Light background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.output h2 {
+  font-size: 1.5em;
+  color: #007bff; /* Blue heading */
+  margin-bottom: 10px;
+}
+
+.output p {
+  font-size: 1.2em;
+  color: #333; /* Dark text */
+  word-wrap: break-word;
+}
+
+.output p.no-result {
+  color: #999;
+  font-style: italic;
+}

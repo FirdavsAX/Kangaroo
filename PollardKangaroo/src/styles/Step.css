@@ -1,0 +1,43 @@
+.step-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.step-container.wild {
+  background-color: #a52a2a; /* Brown for wild */
+  color: white;
+}
+
+.step-container.tame {
+  background-color: #4caf50; /* Green for tame */
+  color: white;
+}
+
+.step-position {
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.step-period {
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+}
+
+.step-size {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+}
