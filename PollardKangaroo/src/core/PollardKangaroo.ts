@@ -58,6 +58,19 @@ class WildKangaroo extends Kangaroo{
         this.period = JSBI.add(this.period, this.step);
     }
 }
+export class KangarooResult{
+    tameMap: Record<string, JSBI>;
+    wildMap: Record<string, JSBI>;
+    result: JSBI;
+    position: JSBI;
+
+    constructor(tameMap: Record<string, JSBI>, wildMap: Record<string, JSBI>, result: JSBI, position: JSBI){
+        this.tameMap = tameMap;
+        this.wildMap = wildMap;
+        this.result = result;
+        this.position = position;
+    }
+}
 
 async function solvePollardKangaroo(
     gStr: string,
@@ -66,7 +79,7 @@ async function solvePollardKangaroo(
     aStr: string,
     bStr: string,
     stepFunctionStr: string
-): Promise<string | null> {
+): Promise<KangarooResult | null> {
     const generator = JSBI.BigInt(gStr);
     const h = JSBI.BigInt(hStr);
     const primeModulus = JSBI.BigInt(pStr);
@@ -100,28 +113,27 @@ async function solvePollardKangaroo(
     let numberOfSteps = Math.floor(typeof sqrtDiff === 'number' ? sqrtDiff : sqrtDiff.re);
 
     for (let i = 0; i <= numberOfSteps; i++) {
-        console.log(`  Wild Kangaroo - Position: ${wild.position.toString()}, Period: ${wild.period.toString()}`);
-        console.log(`  Tame Kangaroo - Position: ${tame.position.toString()}, Period: ${tame.period.toString()}`);
-
         if (tameMap[wild.position.toString()] !== undefined) {
             const tamePeriod = tameMap[wild.position.toString()];
             const result = JSBI.remainder(absolute(JSBI.subtract(tamePeriod, wild.period)), JSBI.subtract(primeModulus, JSBI.BigInt(1)));
-            return result.toString();
+            return new KangarooResult(tameMap, wildMap, result, wild.position);
         }
 
         if (wildMap[tame.position.toString()] !== undefined) {
             const wildPeriod = wildMap[tame.position.toString()];
             const result = JSBI.remainder(absolute(JSBI.subtract(wildPeriod, tame.period)), JSBI.subtract(primeModulus, JSBI.BigInt(1)));
-            return result.toString();
+            return new KangarooResult(tameMap, wildMap, result, tame.position);
         }
 
         tameMap[tame.position.toString()] = tame.period;
         wildMap[wild.position.toString()] = wild.period;
 
+        console.log(`Tame Position: ${tame.position}, Period: ${tame.period}`);
+        console.log(`Wild Position: ${wild.position}, Period: ${wild.period}`);
         wild.jump();
         tame.jump();
     }
-  return "No solution found.";
+    return new KangarooResult(tameMap, wildMap, JSBI.BigInt(0), JSBI.BigInt(0));
 }
 
 export default solvePollardKangaroo;

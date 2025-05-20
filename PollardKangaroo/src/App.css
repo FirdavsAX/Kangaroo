@@ -32,9 +32,9 @@ h1 {
 
 .left,
 .center,
-.right {
+.bottom {
   flex: 1;
-  padding: 10px;
+  padding: 20px;
   background-color: #ffffff; /* White background for sections */
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -49,8 +49,9 @@ h1 {
   text-align: center;
 }
 
-.right {
-  text-align: right;
+.bottom {
+  margin: 10px;
+  text-align: center;
 }
 
 footer {

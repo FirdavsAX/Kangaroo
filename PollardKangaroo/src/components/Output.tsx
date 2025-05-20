@@ -1,7 +1,7 @@
 import "./../styles/Output.css";
 
 interface OutputProps {
-  result: string | null;
+  result: string | undefined;
 }
 
 const Output: React.FC<OutputProps> = ({ result }) => {

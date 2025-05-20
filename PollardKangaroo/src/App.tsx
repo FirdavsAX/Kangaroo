@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "./App.css";
 import AlgorithmInput from "./components/Input";
 import AlgorithmOutput from "./components/Output";
-import solvePollardKangaroo from "./core/PollardKangaroo";
+import solvePollardKangaroo, { KangarooResult } from "./core/PollardKangaroo";
 import logo from "./assets/image.png"; // Add your logo file to the assets folder
+import StepsBar from "./components/StepsBar";
 
 const App: React.FC = () => {
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<KangarooResult | null>(null);
   const [isSolving, setIsSolving] = useState(false);
 
   const handleSolve = async (params: {
@@ -42,12 +43,11 @@ const App: React.FC = () => {
         </div>
         <div className="center">
           {isSolving && <p>Solving...</p>}
-          <AlgorithmOutput result={result} />
+          <AlgorithmOutput result={result?.result.toString()} />
         </div>
-        <div className="right">
-          <p>Additional Information</p>
-          <p>Use this space for extra content.</p>
-        </div>
+      </div>
+      <div className="bottom">
+        <StepsBar result={result} />
       </div>
       <footer>
         <p>© 2025 Firdavs Jumayev</p>
