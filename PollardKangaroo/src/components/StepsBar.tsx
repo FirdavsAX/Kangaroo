@@ -1,3 +1,4 @@
+// --- in src/components/StepsBar.tsx ---
 import React from "react";
 import Step from "./Step";
 import "../styles/StepBar.css";
@@ -19,21 +20,23 @@ const StepsBar: React.FC<StepsBarProps> = ({ result }) => {
     return <div className="steps-bar">No result found.</div>;
   }
 
-  // Display all steps for both tame and wild
-  const tameSteps: StepData[] = Object.entries(result.tameMap || {}).map(
-    ([position, period]) => ({
+  // Build a list of “tame” steps from result.tameMap
+  const tameSteps: StepData[] = Object.entries(result.tameMap).map(
+    ([posStr, periodBig]) => ({
       type: "tame",
-      position,
-      period: period.toString(),
-      stepSize: "-", // Step size not tracked in KangarooResult
+      position: posStr,
+      period: periodBig.toString(),
+      stepSize: "-", // we didn’t explicitly store each stepSize separately
     })
   );
-  const wildSteps: StepData[] = Object.entries(result.wildMap || {}).map(
-    ([position, period]) => ({
+
+  // Build a list of “wild” steps from result.wildMap
+  const wildSteps: StepData[] = Object.entries(result.wildMap).map(
+    ([posStr, periodBig]) => ({
       type: "wild",
-      position,
-      period: period.toString(),
-      stepSize: "-", // Step size not tracked in KangarooResult
+      position: posStr,
+      period: periodBig.toString(),
+      stepSize: "-",
     })
   );
 
@@ -42,20 +45,23 @@ const StepsBar: React.FC<StepsBarProps> = ({ result }) => {
       <div style={{ width: "100%", marginBottom: 12 }}>
         <strong>Result:</strong> {result.result.toString()}
         <br />
-        <strong>Collision Position:</strong> {result.position.toString()}
+        <strong>Collision Position:</strong>{" "}
+        {result.collisionPosition.toString()}
       </div>
-      {tameSteps.map((step, index) => (
+
+      {tameSteps.map((step, idx) => (
         <Step
-          key={`tame-${index}`}
+          key={`tame-${step.position}-${idx}`}
           type={step.type}
           position={step.position}
           period={step.period}
           stepSize={step.stepSize}
         />
       ))}
-      {wildSteps.map((step, index) => (
+
+      {wildSteps.map((step, idx) => (
         <Step
-          key={`wild-${index}`}
+          key={`wild-${step.position}-${idx}`}
           type={step.type}
           position={step.position}
           period={step.period}

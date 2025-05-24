@@ -1,9 +1,10 @@
+// --- in src/App.tsx ---
 import React, { useState } from "react";
 import "./App.css";
 import AlgorithmInput from "./components/Input";
 import AlgorithmOutput from "./components/Output";
-import solvePollardKangaroo, { KangarooResult } from "./core/PollardKangaroo";
-import logo from "./assets/image.png"; // Add your logo file to the assets folder
+import { solvePollardKangaroo, KangarooResult } from "./core/PollardKangaroo";
+import logo from "./assets/image.png";
 import StepsBar from "./components/StepsBar";
 
 const App: React.FC = () => {
@@ -19,7 +20,8 @@ const App: React.FC = () => {
     stepFunction: string;
   }) => {
     setIsSolving(true);
-    setResult(null); // Clear previous result
+    setResult(null);
+
     const solution = await solvePollardKangaroo(
       params.g,
       params.h,
@@ -31,6 +33,7 @@ const App: React.FC = () => {
     setResult(solution);
     setIsSolving(false);
   };
+
   return (
     <div className="app-container">
       <header>
@@ -43,7 +46,9 @@ const App: React.FC = () => {
         </div>
         <div className="center">
           {isSolving && <p>Solving...</p>}
-          <AlgorithmOutput result={result?.result.toString()} />
+          <AlgorithmOutput
+            result={result ? result.result.toString() : undefined}
+          />
         </div>
       </div>
       <div className="bottom">
