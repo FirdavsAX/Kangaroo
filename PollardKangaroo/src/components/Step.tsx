@@ -8,12 +8,11 @@ interface StepProps {
   stepSize: string | number;
 }
 
-const Step: React.FC<StepProps> = ({ type, position, period, stepSize }) => {
+const Step: React.FC<StepProps> = ({ type, position, period }) => {
   return (
     <div className={`step-container ${type}`}>
       <div className="step-position">Position: {position}</div>
       <div className="step-period">Period: {period}</div>
-      <div className="step-size">Step Size: {stepSize}</div>
     </div>
   );
 };
